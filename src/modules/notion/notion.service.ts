@@ -20,19 +20,51 @@ export class NotionService {
 
   public async getFollowComicsMyDatabase(): Promise<GetFollowComicsMyDatabaseResponse> {
     const response = await this.notionSdk.databases.query({
-      database_id: 'a66324488dbd4e2ab5e6dd15e00f512d',
+      database_id: this.configService.get('NOTION_DATABASE_ID'),
       filter: {
-        property: 'status',
-        select: {
-          equals: 'Acompanhando',
-        },
+        and: [
+          {
+            property: 'CAPITULO NOVO',
+            checkbox: {
+              equals: false,
+            },
+          },
+          {
+            property: 'status',
+            select: {
+              equals: 'Acompanhando',
+            },
+          },
+        ],
       },
     });
 
     return response.results.map((item: any) => ({
+      id: item.id,
       name: item?.properties?.Name.title[0].plain_text,
       cap: item?.properties.cap.number,
       url: item?.properties.URL.url,
     }));
+  }
+
+  public async updatePageCheckBox(page_id: string, value: boolean) {
+    await this.notionSdk.pages.update({
+      page_id,
+      properties: {
+        'CAPITULO NOVO': {
+          checkbox: value,
+        },
+
+        Notas: {
+          rich_text: [
+            {
+              text: {
+                content: `edited by notification-manga-api at ${new Date().toISOString()}`,
+              },
+            },
+          ],
+        },
+      },
+    });
   }
 }

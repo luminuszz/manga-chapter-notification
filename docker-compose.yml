@@ -4,17 +4,28 @@ services:
   api:
     container_name: chapter-notifications-api
     restart: always
+    depends_on:
+      - redis_database
     volumes:
       - .:/home/services/chapter-notifications-api
     build: .
     ports:
       - "3000:3000"
 
+  redis_database:
+    image: redis:alpine
+    container_name: chapter-notifications-redis
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data/redis
 
 
 
 
-
+volumes:
+  redis_data:
 
 
 

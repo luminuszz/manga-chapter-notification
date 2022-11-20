@@ -13,11 +13,17 @@ export class AppController {
   async getDatabase() {
     const storageFiles = await this.notionProvider.getFollowComicsMyDatabase();
 
-    const response = await this.scrapingService.checkWithExistsNewChapter(
-      storageFiles[0].url,
-      storageFiles[0].cap,
-    );
+    const file = storageFiles[0];
 
-    return response;
+    const hasNewChapter = await this.scrapingService.checkWithExistsNewChapter({
+      cap: file.cap,
+      url: file.url,
+      id: file.id,
+    });
+
+    await this.notionProvider.updatePageCheckBox(
+      file.id,
+      hasNewChapter.hasChapter,
+    );
   }
 }
