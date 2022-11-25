@@ -28,13 +28,15 @@ export class ScrappingMangaPageJob {
   async processJob({ data }: Job<JobDataDTO>) {
     const { url, cap, id } = data;
 
-    const hasNewChapter = await this.scrapingService.checkWithExistsNewChapter({
-      url,
-      cap,
-      id,
-    });
+    const { hasChapter } = await this.scrapingService.checkWithExistsNewChapter(
+      {
+        url,
+        cap,
+        id,
+      },
+    );
 
-    await this.notionService.updatePageCheckBox(id, hasNewChapter.hasChapter);
+    await this.notionService.updatePageCheckBox(id, hasChapter);
   }
 
   @OnQueueCompleted()

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import puppeteer from 'puppeteer';
-import cheerio from 'cheerio';
+import * as cheerio from 'cheerio';
 import { CheckWithExistsNewChapterDto } from './dto/checkWithExistsNewChapter.dto';
 
 @Injectable()
@@ -12,12 +12,20 @@ export class ScrapingService {
     });
   }
 
+  private stringMatchFilterList = (chapter: number) => [
+    `Capítulo ${chapter.toString()}`,
+    `Cap ${chapter.toString()}`,
+    `cap ${chapter.toString()}`,
+    `capítulo ${chapter.toString()}`,
+    `cap. ${chapter.toString()}`,
+    `Cap. ${chapter.toString()}`,
+    `Cap. ${chapter.toString()}`,
+  ];
+
   private predictingNextChapterList(currentCap: number) {
     let value = currentCap;
 
-    return Array.from({ length: 10 }, (_, i) =>
-      Number((value += 0.1).toFixed(1)),
-    );
+    return Array.from({ length: 10 }, () => Number((value += 0.1).toFixed(1)));
   }
 
   async checkWithExistsNewChapter({ cap, url }: CheckWithExistsNewChapterDto) {
@@ -34,7 +42,9 @@ export class ScrapingService {
       const possibleNextChapters = this.predictingNextChapterList(cap);
 
       const hasChapter = possibleNextChapters.some((chapter) =>
-        $.html().includes(String(chapter)),
+        this.stringMatchFilterList(chapter).some((text) =>
+          $.html().includes(text),
+        ),
       );
 
       await browser.close();

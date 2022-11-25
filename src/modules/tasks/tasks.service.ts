@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { InjectQueue } from '@nestjs/bull';
 import {
-  ScrappingMangaPageJob,
   scrapingMangaPageQueueName,
   JobDataDTO,
 } from '../scraping/jobs/scrapping-manga-page.job';

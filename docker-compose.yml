@@ -10,7 +10,7 @@ services:
       - .:/home/services/chapter-notifications-api
     build: .
     ports:
-      - "3000:3000"
+      - "3333:3333"
 
   redis_database:
     image: redis:alpine
