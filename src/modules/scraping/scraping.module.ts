@@ -6,9 +6,11 @@ import {
   scrapingMangaPageQueueName,
 } from './jobs/scrapping-manga-page.job';
 import { NotionModule } from '../notion/notion.module';
+import { NotificationModule } from '../notification/notification.module';
 
 @Module({
   imports: [
+    NotificationModule,
     BullModule.registerQueue({
       name: scrapingMangaPageQueueName,
     }),

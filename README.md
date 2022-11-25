@@ -24,7 +24,7 @@
 
 ## Next features
 
- - [ ] Send notification to telegram
+ - [x] Send notification to telegram
  - [ ] Send notification to discord
  - [ ] Send notification to email
  - [ ] Send notification do personal by (api_service)

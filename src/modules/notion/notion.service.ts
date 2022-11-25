@@ -27,6 +27,7 @@ export class NotionService {
             property: 'CAPITULO NOVO',
             checkbox: {
               equals: false,
+              does_not_equal: true,
             },
           },
           {

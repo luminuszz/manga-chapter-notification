@@ -7,6 +7,7 @@ import {
 import { Job } from 'bull';
 import { ScrapingService } from '../scraping.service';
 import { NotionService } from '../../notion/notion.service';
+import { NotificationService } from '../../notification/notification.service';
 
 export type JobDataDTO = {
   url: string;
@@ -22,11 +23,12 @@ export class ScrappingMangaPageJob {
   constructor(
     private readonly scrapingService: ScrapingService,
     private readonly notionService: NotionService,
+    private readonly notificationService: NotificationService,
   ) {}
 
   @Process()
   async processJob({ data }: Job<JobDataDTO>) {
-    const { url, cap, id } = data;
+    const { url, cap, id, name } = data;
 
     const { hasChapter } = await this.scrapingService.checkWithExistsNewChapter(
       {
@@ -37,6 +39,14 @@ export class ScrappingMangaPageJob {
     );
 
     await this.notionService.updatePageCheckBox(id, hasChapter);
+
+    if (hasChapter) {
+      await this.notificationService.sendNotification({
+        name,
+        url,
+        chapter: cap,
+      });
+    }
   }
 
   @OnQueueCompleted()
