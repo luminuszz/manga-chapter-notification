@@ -5,7 +5,7 @@
 
 ## Propose
  
-    Notification chapter is automation for listen notion manga list find for new chapter and send notification to my personal list .
+ Notification chapter is automation for listen notion manga list find for new chapter and send notification to my personal list .
 
 
 
