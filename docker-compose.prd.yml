@@ -8,7 +8,7 @@ services:
       - redis_database
     volumes:
       - .:/home/services/chapter-notifications-api
-    build: ./docker/dev
+    build: ./docker/prod
     ports:
       - "3333:3333"
 
