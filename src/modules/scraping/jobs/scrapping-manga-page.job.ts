@@ -49,16 +49,26 @@ export class ScrappingMangaPageJob {
 
     return {
       hasNewChapter,
+      url,
+      cap,
+      id,
     };
   }
 
   @OnQueueCompleted()
-  onFinishJob(job: Job<JobDataDTO>) {
-    console.log({
-      t: job.returnvalue,
-    });
+  async onFinishJob(job: Job<JobDataDTO>) {
+    const { hasNewChapter, cap, url, name } = job.returnvalue;
 
     console.log('job finished', { ...job.data, hasChapter: job.returnvalue });
+
+    if (hasNewChapter) {
+      console.log('notify providers');
+      await this.notificationService.sendNotification({
+        name,
+        chapter: cap,
+        url: url,
+      });
+    }
   }
 
   @OnQueueError()
