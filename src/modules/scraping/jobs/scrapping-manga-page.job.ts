@@ -39,16 +39,9 @@ export class ScrappingMangaPageJob {
 
     await this.notionService.updatePageCheckBox(id, hasNewChapter);
 
-    if (hasNewChapter) {
-      await this.notificationService.sendNotification({
-        name,
-        url,
-        chapter: cap,
-      });
-    }
-
     return {
       hasNewChapter,
+      name,
       url,
       cap,
       id,
