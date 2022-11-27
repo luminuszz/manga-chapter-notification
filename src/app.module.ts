@@ -21,7 +21,10 @@ export type Env = {
 
 @Module({
   imports: [
-    EventEmitterModule.forRoot(),
+    EventEmitterModule.forRoot({
+      maxListeners: 10,
+      removeListener: true,
+    }),
     ConfigModule.forRoot({
       isGlobal: true,
     }),

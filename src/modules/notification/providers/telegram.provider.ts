@@ -43,7 +43,9 @@ export class TelegramProvider implements NotificationContractProvider {
     );
   }
 
-  @OnEvent(Topics.chapterUpdate)
+  @OnEvent(Topics.chapterUpdate, {
+    async: true,
+  })
   async listenToUpdates(payload: MessageBody): Promise<void> {
     await this.sendNotification(payload);
   }
