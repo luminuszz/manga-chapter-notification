@@ -30,17 +30,16 @@ export class ScrappingMangaPageJob {
   async processJob({ data }: Job<JobDataDTO>) {
     const { url, cap, id, name } = data;
 
-    const { hasChapter } = await this.scrapingService.checkWithExistsNewChapter(
-      {
+    const { hasNewChapter } =
+      await this.scrapingService.checkWithExistsNewChapter({
         url,
         cap,
         id,
-      },
-    );
+      });
 
-    await this.notionService.updatePageCheckBox(id, hasChapter);
+    await this.notionService.updatePageCheckBox(id, hasNewChapter);
 
-    if (hasChapter) {
+    if (hasNewChapter) {
       await this.notificationService.sendNotification({
         name,
         url,
@@ -48,11 +47,17 @@ export class ScrappingMangaPageJob {
       });
     }
 
-    return hasChapter;
+    return {
+      hasNewChapter,
+    };
   }
 
   @OnQueueCompleted()
   onFinishJob(job: Job<JobDataDTO>) {
+    console.log({
+      t: job.returnvalue,
+    });
+
     console.log('job finished', { ...job.data, hasChapter: job.returnvalue });
   }
 

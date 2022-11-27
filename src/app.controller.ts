@@ -15,15 +15,13 @@ export class AppController {
 
     const file = storageFiles[0];
 
-    const hasNewChapter = await this.scrapingService.checkWithExistsNewChapter({
-      cap: file.cap,
-      url: file.url,
-      id: file.id,
-    });
+    const { hasNewChapter } =
+      await this.scrapingService.checkWithExistsNewChapter({
+        cap: file.cap,
+        url: file.url,
+        id: file.id,
+      });
 
-    await this.notionProvider.updatePageCheckBox(
-      file.id,
-      hasNewChapter.hasChapter,
-    );
+    await this.notionProvider.updatePageCheckBox(file.id, hasNewChapter);
   }
 }

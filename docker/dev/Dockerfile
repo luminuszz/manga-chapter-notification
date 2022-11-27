@@ -1,5 +1,7 @@
 FROM node:slim
 
+WORKDIR /home/services/chapter-notifications-api
+
 COPY . .
 
 # We don't need the standalone Chromium
@@ -18,6 +20,5 @@ RUN apt-get update && apt-get install gnupg wget -y && \
 
 RUN yarn install
 
-RUN yarn  build
 
-CMD yarn start:prod
+CMD yarn start:dev

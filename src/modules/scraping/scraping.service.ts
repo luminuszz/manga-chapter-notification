@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import puppeteer from 'puppeteer-extra';
 import StealthPlugin from 'puppeteer-extra-plugin-stealth';
-import * as cheerio from 'cheerio';
+import { some } from 'lodash';
 import { CheckWithExistsNewChapterDto } from './dto/checkWithExistsNewChapter.dto';
 
 @Injectable()
@@ -20,9 +20,9 @@ export class ScrapingService {
     puppeteer.use(StealthPlugin());
 
     return puppeteer.launch({
+      headless: true,
       executablePath: '/usr/bin/google-chrome',
       args,
-      ignoreHTTPSErrors: true,
     });
   }
 
@@ -47,27 +47,32 @@ export class ScrapingService {
       const browser = await this.initializeBrowser();
       const page = await browser.newPage();
 
+      await page.setUserAgent(
+        'Mozilla/5.0 (Windows NT 5.1; rv:5.0) Gecko/20100101 Firefox/5.0',
+      );
+
       await page.goto(url, {
         waitUntil: 'networkidle2',
-        timeout: 5000,
       });
 
-      const html = await page.content();
-
-      const $ = cheerio.load(html);
+      const html = await page.evaluate(
+        () => document.querySelector('*').outerHTML,
+      );
 
       const possibleNextChapters = this.predictingNextChapterList(cap);
 
-      const hasChapter = possibleNextChapters.some((chapter) =>
-        this.stringMatchFilterList(chapter).some((text) =>
-          $.html().includes(text),
-        ),
+      const stringsToMatch = possibleNextChapters
+        .map((cap) => this.stringMatchFilterList(cap))
+        .flat();
+
+      const hasNewChapter = some(stringsToMatch, (stringToMatch) =>
+        html.includes(stringToMatch),
       );
 
-      await browser.close();
-
       return {
-        hasChapter,
+        hasNewChapter,
+        stringsToMatch,
+        html,
       };
     } catch (e) {
       console.error(e);
