@@ -1,8 +1,6 @@
 FROM node:slim
 
-WORKDIR /home/services/chapter-notifications-api
-
-COPY . .
+COPY ../. .
 
 # We don't need the standalone Chromium
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
@@ -20,4 +18,6 @@ RUN apt-get update && apt-get install gnupg wget -y && \
 
 RUN yarn install
 
-CMD yarn start:dev
+RUN yarn  build
+
+CMD yarn start:prod
