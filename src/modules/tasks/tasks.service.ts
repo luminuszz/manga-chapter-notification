@@ -17,7 +17,7 @@ export class TasksService {
     private readonly notionService: NotionService,
   ) {}
 
-  @Cron(CronExpression.EVERY_2_HOURS, {
+  @Cron(CronExpression.EVERY_HOUR, {
     timeZone: 'America/Bahia',
   })
   public async handleBackgroundTasks() {

@@ -47,11 +47,13 @@ export class ScrappingMangaPageJob {
         chapter: cap,
       });
     }
+
+    return hasChapter;
   }
 
   @OnQueueCompleted()
   onFinishJob(job: Job<JobDataDTO>) {
-    console.log('job finished', job.data);
+    console.log('job finished', { ...job.data, hasChapter: job.returnvalue });
   }
 
   @OnQueueError()

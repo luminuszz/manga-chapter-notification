@@ -33,6 +33,8 @@
     "bull": "^4.10.1",
     "cheerio": "^1.0.0-rc.12",
     "puppeteer": "^19.2.2",
+    "puppeteer-extra": "^3.3.4",
+    "puppeteer-extra-plugin-stealth": "^2.11.1",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
