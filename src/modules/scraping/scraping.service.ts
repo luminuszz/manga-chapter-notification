@@ -53,6 +53,7 @@ export class ScrapingService {
 
       await page.goto(url, {
         waitUntil: 'networkidle2',
+        timeout: 50000,
       });
 
       const html = await page.evaluate(
