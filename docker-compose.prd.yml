@@ -10,7 +10,7 @@ services:
       - .:/home/services/chapter-notifications-api
     build:
       context: .
-      dockerfile: ./docker/dev/Dockerfile
+      dockerfile: ./docker/prod/Dockerfile
     ports:
       - "3333:3333"
 
