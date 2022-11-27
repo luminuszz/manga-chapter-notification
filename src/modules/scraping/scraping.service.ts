@@ -43,8 +43,8 @@ export class ScrapingService {
   }
 
   async checkWithExistsNewChapter({ cap, url }: CheckWithExistsNewChapterDto) {
+    const browser = await this.initializeBrowser();
     try {
-      const browser = await this.initializeBrowser();
       const page = await browser.newPage();
 
       await page.setUserAgent(
@@ -53,7 +53,6 @@ export class ScrapingService {
 
       await page.goto(url, {
         waitUntil: 'networkidle2',
-        timeout: 50000,
       });
 
       const html = await page.evaluate(
@@ -77,6 +76,8 @@ export class ScrapingService {
       };
     } catch (e) {
       console.error(e);
+    } finally {
+      await browser.close();
     }
   }
 }
