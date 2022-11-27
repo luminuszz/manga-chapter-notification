@@ -28,7 +28,7 @@ export class TelegramProvider implements NotificationContractProvider {
 
   private createTelegramMessage({ url, name, chapter }: MessageBody): string {
     return `
-    Tem capitulo novo de ${name} 
+   ${name} - Capítulo Novo disponível!
     Cap: ${chapter}
     link -> ${url}
     `;
