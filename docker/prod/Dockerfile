@@ -1,6 +1,6 @@
 FROM node:slim
 
-COPY ../. .
+COPY . .
 
 # We don't need the standalone Chromium
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true

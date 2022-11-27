@@ -8,7 +8,9 @@ services:
       - redis_database
     volumes:
       - .:/home/services/chapter-notifications-api
-    build: ./docker/dev
+    build:
+      context: .
+      dockerfile: ./docker/dev/Dockerfile
     ports:
       - "3333:3333"
 
