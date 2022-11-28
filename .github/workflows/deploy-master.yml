@@ -21,4 +21,4 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           script: |
-            cd apps/manga-chapter-notification && docker compose  -f docker-compose.prd.yml up --build -d
+            cd apps/manga-chapter-notification git pull origin master && docker compose  -f docker-compose.prd.yml up --build -d
