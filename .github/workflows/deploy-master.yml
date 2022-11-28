@@ -19,6 +19,6 @@ jobs:
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY_DEPLOY }}
+          password: ${{ secrets.PASSWORD }}
           script: |
-            cd apps/manga-chapter-notification && docker system prune --force && docker compose  -f docker-compose.prd.yml up --build -d
+            cd apps/manga-chapter-notification && docker compose  -f docker-compose.prd.yml up --build -d
