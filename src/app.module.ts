@@ -23,7 +23,7 @@ export type Env = {
   imports: [
     EventEmitterModule.forRoot({
       maxListeners: 10,
-      removeListener: true,
+      delimiter: '.',
     }),
     ConfigModule.forRoot({
       isGlobal: true,
@@ -33,6 +33,10 @@ export type Env = {
       redis: {
         port: 6379,
         host: 'redis_database',
+      },
+      limiter: {
+        max: 3,
+        duration: 60000,
       },
     }),
     NotionModule,
