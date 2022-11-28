@@ -1,0 +1,24 @@
+name: "Deploy master"
+
+
+on:
+  push:
+    branches:
+      - master
+
+
+jobs:
+  build_and_deploy:
+    name: Build and deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: deploy container docker
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY_DEPLOY }}
+          script: |
+            cd apps/manga-chapter-notification && docker system prune --force && docker compose  -f docker-compose.prd.yml up --build -d
