@@ -5,7 +5,7 @@
 
 ## Propose
  
- Notification chapter is automation for listen notion manga list find for new chapter and send notification to my personal list .
+ Notification chapter is automation for listen notion manga list find for new chapter and send notification to others providers (telegram,discord,e-mail)
 
 
 
@@ -13,8 +13,7 @@
 
  - Docker (docker-compose)
  - queue using redis databae
- - puptier for scraping
- - puppeteer
+ - puppeteer for scraping
  - Nest.js for app workspace standalone app and api service
  - cheerio for scraping and filter data
  - Nestjs Cron for schedule tasks
@@ -28,3 +27,5 @@
  - [ ] Send notification to discord
  - [ ] Send notification to email
  - [ ] Send notification do personal by (api_service)
+ - [ ] Send notification to group by (api_service)
+ - [ ] Cover all service with unit tests

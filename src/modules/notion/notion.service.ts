@@ -1,22 +1,17 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { Client } from '@notionhq/client';
 import { ConfigService } from '@nestjs/config';
 import { Env } from '../../app.module';
 import { GetFollowComicsMyDatabaseResponse } from './dto/getFollowComicsMyDatabase.dto';
+import { NOTION_SDK_PROVIDER_TOKEN } from './notionClient.provider';
 
 @Injectable()
 export class NotionService {
-  private readonly notionSdk: Client;
-
-  constructor(private readonly configService: ConfigService<Env>) {
-    console.log({
-      t: this.configService.get('NOTION_AUTH_TOKEN'),
-    });
-
-    this.notionSdk = new Client({
-      auth: this.configService.get('NOTION_AUTH_TOKEN'),
-    });
-  }
+  constructor(
+    @Inject(NOTION_SDK_PROVIDER_TOKEN)
+    private readonly notionSdk: Client,
+    private readonly configService: ConfigService<Env>,
+  ) {}
 
   public async getFollowComicsMyDatabase(): Promise<GetFollowComicsMyDatabaseResponse> {
     const response = await this.notionSdk.databases.query({
