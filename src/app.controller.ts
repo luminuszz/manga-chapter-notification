@@ -11,17 +11,6 @@ export class AppController {
 
   @Get('/databases')
   async getDatabase() {
-    const storageFiles = await this.notionProvider.getFollowComicsMyDatabase();
-
-    const file = storageFiles[0];
-
-    const { hasNewChapter } =
-      await this.scrapingService.checkWithExistsNewChapter({
-        cap: file.cap,
-        url: file.url,
-        id: file.id,
-      });
-
-    await this.notionProvider.updatePageCheckBox(file.id, hasNewChapter);
+    return await this.notionProvider.getFollowComicsMyDatabase();
   }
 }

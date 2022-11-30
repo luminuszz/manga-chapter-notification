@@ -30,7 +30,7 @@ export class ScrappingMangaPageJob {
   async processJob({ data }: Job<JobDataDTO>) {
     const { url, cap, id, name } = data;
 
-    const { hasNewChapter } =
+    const { hasNewChapter, newChapter } =
       await this.scrapingService.checkWithExistsNewChapter({
         url,
         cap,
@@ -41,6 +41,7 @@ export class ScrappingMangaPageJob {
 
     return {
       hasNewChapter,
+      newChapter: newChapter || null,
       name,
       url,
       cap,
@@ -50,7 +51,7 @@ export class ScrappingMangaPageJob {
 
   @OnQueueCompleted()
   async onFinishJob(job: Job<JobDataDTO>) {
-    const { hasNewChapter, cap, url, name } = job.returnvalue;
+    const { hasNewChapter, cap, url, name, newChapter } = job.returnvalue;
 
     console.log('job finished', { ...job.data, hasChapter: job.returnvalue });
 
@@ -60,6 +61,7 @@ export class ScrappingMangaPageJob {
         name,
         chapter: cap,
         url: url,
+        newChapter,
       });
     }
   }

@@ -24,10 +24,16 @@ export class TelegramProvider implements NotificationContractProvider {
     this.group_id = this.configService.get('TELEGRAM_CHAT_ID');
   }
 
-  public createTelegramMessage({ url, name, chapter }: MessageBody): string {
+  public createTelegramMessage({
+    url,
+    name,
+    chapter,
+    newChapter,
+  }: MessageBody): string {
     return `
-   ${name} - Capítulo Novo disponível!
-    Cap: ${chapter}
+   ${name} - Capítulo Novo disponível - ${newChapter}!
+    Cap Anterior: ${chapter}
+    Novo Capítulo: ${newChapter}
     link -> ${url}
     `;
   }

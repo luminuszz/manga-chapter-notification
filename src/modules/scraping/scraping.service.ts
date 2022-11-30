@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import puppeteer from 'puppeteer-extra';
 import StealthPlugin from 'puppeteer-extra-plugin-stealth';
-import { some } from 'lodash';
+import { find, some } from 'lodash';
 import { CheckWithExistsNewChapterDto } from './dto/checkWithExistsNewChapter.dto';
 
 @Injectable()
@@ -65,12 +65,13 @@ export class ScrapingService {
         .map((cap) => this.stringMatchFilterList(cap))
         .flat();
 
-      const hasNewChapter = some(stringsToMatch, (stringToMatch) =>
+      const newChapter = find(stringsToMatch, (stringToMatch) =>
         html.includes(stringToMatch),
       );
 
       return {
-        hasNewChapter,
+        hasNewChapter: !!newChapter,
+        newChapter: newChapter || null,
         stringsToMatch,
         html,
       };

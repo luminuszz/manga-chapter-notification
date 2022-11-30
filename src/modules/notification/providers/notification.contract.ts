@@ -2,6 +2,8 @@ export type MessageBody = {
   name: string;
   chapter: number;
   url: string;
+
+  newChapter?: string;
 };
 
 export abstract class NotificationContractProvider {
