@@ -6,7 +6,7 @@ import { CheckWithExistsNewChapterDto } from './dto/checkWithExistsNewChapter.dt
 
 @Injectable()
 export class ScrapingService {
-  private async initializeBrowser() {
+  async initializeBrowser() {
     const args: string[] = [
       '--no-sandbox',
       '--disable-setuid-sandbox',
@@ -26,7 +26,7 @@ export class ScrapingService {
     });
   }
 
-  private stringMatchFilterList = (chapter: number) => [
+  stringMatchFilterList = (chapter: number) => [
     `Capítulo ${chapter.toString()}`,
     `Cap ${chapter.toString()}`,
     `cap ${chapter.toString()}`,
@@ -36,7 +36,7 @@ export class ScrapingService {
     `Cap. ${chapter.toString()}`,
   ];
 
-  private predictingNextChapterList(currentCap: number) {
+  predictingNextChapterList(currentCap: number) {
     let value = currentCap;
 
     return Array.from({ length: 10 }, () => Number((value += 0.1).toFixed(1)));
