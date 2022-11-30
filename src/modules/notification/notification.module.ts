@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { NotificationService } from './notification.service';
-import { TelegramProvider } from './providers/telegram.provider';
+import { TelegramProviderInstanceConfig } from './providers/telegram.provider';
 
 @Module({
-  providers: [NotificationService, TelegramProvider],
+  providers: [NotificationService, TelegramProviderInstanceConfig],
 
   exports: [NotificationService],
 })
