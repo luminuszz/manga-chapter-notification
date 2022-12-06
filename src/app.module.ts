@@ -12,7 +12,7 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
 
 export type Env = {
   NOTION_AUTH_TOKEN: string;
-  NOTION_DATABASE_ID: string;
+  NOTION_DATABASE_COMIC_ID: string;
   TELEGRAM_APP_ID: string;
   TELEGRAM_API_HASH: string;
   TELEGRAM_CHAT_ID: string;

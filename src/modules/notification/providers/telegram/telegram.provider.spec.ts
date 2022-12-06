@@ -51,8 +51,6 @@ describe('TelegramProvider', () => {
   it('sendNotification: it should be able to send a notification a telegram group', async () => {
     const messageBody = { name: 'teste', chapter: 5, url: 'dsad' };
 
-    console.log('mock', telegramProvider.telegramBot);
-
     await expect(
       telegramProvider.sendNotification(messageBody),
     ).resolves.toBeUndefined();

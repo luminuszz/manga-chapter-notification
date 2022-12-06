@@ -1,13 +1,14 @@
 import { Telegraf } from 'telegraf';
-import { Injectable, Provider } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { Env } from '../../../app.module';
+import { Env } from '../../../../app.module';
 import {
   MessageBody,
   NotificationContractProvider,
-} from './notification.contract';
+} from '../../notification.contract';
 import { OnEvent } from '@nestjs/event-emitter';
-import { Topics } from '../topics';
+import { Topics } from '../../topics';
+import { TELEGRAF_PROVIDER_TOKEN } from './telegraf';
 
 @Injectable()
 export class TelegramProvider implements NotificationContractProvider {
@@ -19,7 +20,9 @@ export class TelegramProvider implements NotificationContractProvider {
 
   constructor(
     private readonly configService: ConfigService<Env>,
-    readonly telegramBot: Telegraf,
+
+    @Inject(TELEGRAF_PROVIDER_TOKEN)
+    private readonly telegramBot: Telegraf,
   ) {
     this.group_id = this.configService.get('TELEGRAM_CHAT_ID');
   }
@@ -52,15 +55,3 @@ export class TelegramProvider implements NotificationContractProvider {
     await this.sendNotification(payload);
   }
 }
-
-export const TelegramProviderInstanceConfig: Provider = {
-  provide: TelegramProvider,
-  useFactory: (configService: ConfigService<Env>) => {
-    const telegramBot = new Telegraf(
-      configService.get('TELEGRAM_NOTIFICATION_BOT'),
-    );
-
-    return new TelegramProvider(configService, telegramBot);
-  },
-  inject: [ConfigService],
-};

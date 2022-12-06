@@ -1,10 +1,4 @@
-export type MessageBody = {
-  name: string;
-  chapter: number;
-  url: string;
-
-  newChapter?: string;
-};
+import { MessageBody } from './dto/message-body.dto';
 
 export abstract class NotificationContractProvider {
   abstract sendNotification(message: MessageBody): Promise<void>;

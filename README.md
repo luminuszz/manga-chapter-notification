@@ -24,8 +24,5 @@
 ## Next features
 
  - [x] Send notification to telegram
- - [ ] Send notification to discord
- - [ ] Send notification to email
- - [ ] Send notification do personal by (api_service)
- - [ ] Send notification to group by (api_service)
  - [ ] Cover all service with unit tests
+ - [ ] Listen animes by personal notion list
