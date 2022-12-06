@@ -2,7 +2,7 @@ import { Telegraf } from 'telegraf';
 import { Inject, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Env } from '../../../../app.module';
-import { NotificationContractProvider } from '../../notification.contract';
+import { NotificationContractProvider } from '../notification-provider.contract';
 import { MessageBody } from '../../dto/message-body.dto';
 import { OnEvent } from '@nestjs/event-emitter';
 import { Topics } from '../../topics';
