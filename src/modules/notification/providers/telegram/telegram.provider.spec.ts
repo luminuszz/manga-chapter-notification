@@ -1,5 +1,5 @@
 import { Test } from '@nestjs/testing';
-import { TelegramProvider } from './telegram.provider';
+import { TelegramService } from './telegram.service';
 import { Provider } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
@@ -17,21 +17,21 @@ const telegrafMock = {
 } as any;
 
 const TelegramProviderInstanceConfigMock: Provider = {
-  provide: TelegramProvider,
+  provide: TelegramService,
   useFactory: (configService: ConfigService) =>
-    new TelegramProvider(configService, telegrafMock),
+    new TelegramService(configService, telegrafMock),
   inject: [ConfigService],
 };
 
 describe('TelegramProvider', () => {
-  let telegramProvider: TelegramProvider;
+  let telegramProvider: TelegramService;
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
       providers: [TelegramProviderInstanceConfigMock, configServiceMock],
     }).compile();
 
-    telegramProvider = moduleRef.get<TelegramProvider>(TelegramProvider);
+    telegramProvider = moduleRef.get<TelegramService>(TelegramService);
   });
 
   it('should be defined', () => {

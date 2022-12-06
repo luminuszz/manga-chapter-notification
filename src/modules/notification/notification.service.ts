@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { MessageBody } from './notification.contract';
+import { MessageBody } from './dto/message-body.dto';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { Topics } from './topics';
 

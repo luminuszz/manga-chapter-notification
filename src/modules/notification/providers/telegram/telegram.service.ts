@@ -2,16 +2,14 @@ import { Telegraf } from 'telegraf';
 import { Inject, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Env } from '../../../../app.module';
-import {
-  MessageBody,
-  NotificationContractProvider,
-} from '../../notification.contract';
+import { NotificationContractProvider } from '../../notification.contract';
+import { MessageBody } from '../../dto/message-body.dto';
 import { OnEvent } from '@nestjs/event-emitter';
 import { Topics } from '../../topics';
 import { TELEGRAF_PROVIDER_TOKEN } from './telegraf';
 
 @Injectable()
-export class TelegramProvider implements NotificationContractProvider {
+export class TelegramService implements NotificationContractProvider {
   getProviderName(): string {
     return 'Telegram';
   }
@@ -20,7 +18,6 @@ export class TelegramProvider implements NotificationContractProvider {
 
   constructor(
     private readonly configService: ConfigService<Env>,
-
     @Inject(TELEGRAF_PROVIDER_TOKEN)
     private readonly telegramBot: Telegraf,
   ) {
