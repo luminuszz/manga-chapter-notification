@@ -4,6 +4,7 @@ import { ConfigService } from '@nestjs/config';
 import { Env } from '../../app.module';
 import { GetFollowComicsMyDatabaseResponse } from './dto/getFollowComicsMyDatabase.dto';
 import { NOTION_SDK_PROVIDER_TOKEN } from './notionClient.provider';
+import { format } from 'date-fns';
 
 @Injectable()
 export class NotionService {
@@ -15,7 +16,7 @@ export class NotionService {
 
   public async getFollowComicsMyDatabase(): Promise<GetFollowComicsMyDatabaseResponse> {
     const response = await this.notionSdk.databases.query({
-      database_id: this.configService.get('NOTION_DATABASE_ID'),
+      database_id: this.configService.get('NOTION_DATABASE_COMIC_ID'),
       filter: {
         and: [
           {
@@ -54,7 +55,10 @@ export class NotionService {
           rich_text: [
             {
               text: {
-                content: `edited by notification-manga-api at ${new Date().toISOString()}`,
+                content: `edited by notification-manga-api at ${format(
+                  new Date(),
+                  'dd/MM/yyyy HH:mm:ss',
+                )}`,
               },
             },
           ],
