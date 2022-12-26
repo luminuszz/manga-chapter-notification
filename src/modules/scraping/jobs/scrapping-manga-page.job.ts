@@ -16,7 +16,7 @@ export type JobDataDTO = {
   id: string;
 };
 
-export const scrapingMangaPageQueueName = 'scrapingMangaPage';
+export const scrapingMangaPageQueueName = 'scrapingMangaPage-queue-job';
 
 @Processor(scrapingMangaPageQueueName)
 export class ScrappingMangaPageJob {
@@ -27,10 +27,8 @@ export class ScrappingMangaPageJob {
   ) {}
 
   @Process()
-  async processJob({ data }: Job<JobDataDTO>) {
-    const { url, cap, id, name } = data;
-
-    const { hasNewChapter, newChapter } =
+  async processJob({ data: { url, cap, id, name } }: Job<JobDataDTO>) {
+    const { hasNewChapter, newChapter = null } =
       await this.scrapingService.checkWithExistsNewChapter({
         url,
         cap,
@@ -41,7 +39,7 @@ export class ScrappingMangaPageJob {
 
     return {
       hasNewChapter,
-      newChapter: newChapter || null,
+      newChapter,
       name,
       url,
       cap,
@@ -56,7 +54,6 @@ export class ScrappingMangaPageJob {
     console.log('job finished', { ...job.data, hasChapter: job.returnvalue });
 
     if (hasNewChapter) {
-      console.log('notify providers');
       await this.notificationService.sendNotification({
         name,
         chapter: cap,

@@ -9,4 +9,7 @@ export class AppController {
   async getDatabase() {
     return await this.notionProvider.getFollowComicsMyDatabase();
   }
+
+ 
+
 }

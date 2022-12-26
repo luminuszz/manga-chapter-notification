@@ -3,7 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { Client } from '@notionhq/client';
 import { Env } from '../../app.module';
 
-export const NOTION_SDK_PROVIDER_TOKEN = 'NOTION_SDK_PROVIDER';
+export const NOTION_SDK_PROVIDER_TOKEN = 'NOTION_SDK_PROVIDER_TOKEN';
 
 export const NotionClientProvider: Provider = {
   provide: NOTION_SDK_PROVIDER_TOKEN,
